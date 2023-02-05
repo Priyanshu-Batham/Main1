@@ -1,0 +1,316 @@
+*{
+    margin: 0;
+    padding: 0;
+    max-width: 100%;  /*if not added then it will generate a horizontal scroll bar */
+    box-sizing: border-box;
+}
+/* ----------------------------------- */
+.page-one{
+    height: 100vh;
+    width: 100vw;
+    background-image: url(images/bg.jpg);
+    background-size: cover;
+    /* background-color: green; */
+}
+.navbar{
+    z-index: 1;
+    position: fixed;
+    transition: 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100vw;
+    height:7vh;
+}
+.navbar .homeBtn{
+    color: white;
+    font-size: 4vh;
+    margin-left: 2vh;
+    margin-top: 0.5vh;
+}
+.navbar .menuOpenBtn{
+    color: white;
+    font-size: 4vh;
+    margin-right: 2vh;
+    margin-top: 0.5vh;
+}
+.navbar .menu{
+    transition: 0.8s;
+    position: absolute;
+    overflow: hidden;
+    z-index: 1;
+    right: 0;
+    top: 0;
+    height: 0vh;
+    width: 100vw;
+    /* background-color: blue; */
+    
+}
+.menu .menuCloseBtn{
+    color: white;
+    height: 10vh;
+    font-size: 5vh;
+    padding-left: 3vh;
+    padding-top: 3vh;
+    background-color: rgb(0, 0, 0);
+}
+.menu ul{
+    height: 90vh;
+    background-color: rgb(21, 97, 81);
+    padding-top: 5vh;
+    padding-left: 3vh;
+    
+}
+.menu ul li{
+    color: white;
+    font-family: 'Sofia Sans', sans-serif;
+    font-size: 4vh;
+    list-style: none;
+    line-height: 7vh;
+}
+.area1{
+    padding-top: 7vh;
+    width: 100vw;
+    height: 93vh;
+    /* background-color: red; */
+}
+.area1 .me{
+    position: relative;
+    top: 8vh;
+    margin: auto;
+    width: 70vw;
+    height: 65vh;
+    /* background-color: black; */
+}
+.me .myName{
+    color: white;
+    font-family: 'Satisfy', cursive;
+    height: 40%;
+    width: 100%;
+    text-align: center;
+    font-size: 4vh;
+    /* padding-top: 4%; */
+    /* background-color: blue; */
+}
+.me .quote{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: white;
+    font-family: 'Satisfy', cursive;
+    position: relative;
+    font-size: 3vh;
+    width: 100%;
+    height: 35%;
+    /* background-color: orange; */
+}
+.me .nextBtn{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 10%;
+    /* background-color: purple; */
+}
+.me .nextBtn .nextQuoteBtn{
+    color: white;
+    transition: 0.1s;
+    font-family: 'Sofia Sans', sans-serif;
+    border: 2px solid white;
+    background-color: rgb(32, 139, 127);
+    font-weight: 20px;
+    font-size: 2vh;
+    border-radius: 4vh;
+    width: 6vh;
+    height: 6vh;
+}
+.me .tags{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-family: 'Sofia Sans', sans-serif;
+    padding-top: 10px;
+    text-align: center;
+    font-size: 3.5vh;
+    /* background-color: green; */
+    width: 100%;
+    height: 15%
+}
+/* ------------------------------------------------------------------ */
+.page-two{
+    font-family: 'Sofia Sans', sans-serif;
+    height: 100vh;
+    width: 100vw;
+    /* background-color: #032118; */
+}
+.area2{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0,13,14,255);
+}
+.area2 .bigbox{
+    position: relative;
+    /* overflow: hidden; */
+    height: 80%;
+    width: 80%;
+    /* background-color: red; */
+}
+.area2 .bigbox .hi_iam{
+    position: relative;
+    display: flex;
+    width: 100%;
+    height: 11%;
+    /* overflow: hidden; */
+    /* background-color: orange; */
+}
+.hi_iam .hi{
+    opacity: 0;
+    transition: 2s;
+    transform: translateY(60px);
+    display: flex;
+    align-items: center;
+    text-align: right;
+    justify-content: end;
+    padding-right: 30px;
+    /* background-color: red; */
+    color: white;
+    font-size: 10vh;
+    width: 40%;
+    height: 100%;
+}
+.hi_iam .iam{
+    
+    opacity: 0;
+    transition: 2s;
+    transform: translateY(60px);
+    height: 100%;
+    width: 60%;
+    /* display: flex; */
+    justify-content: center;
+    flex-direction: column;
+    /* background-color: green; */
+}
+.hi_iam .iam .i{
+    /* background-color: blue; */
+    color: white;
+    height: 50%;
+    padding-top: 0.5vh;
+    padding-left: 2vh;
+    font-size: 3vh;
+}
+.hi_iam .iam .am{
+    /* background-color: rgb(246, 135, 0); */
+    color: white;
+    height: 50%;
+    /* padding-bottom: 7vh; */
+    font-size: 3vh;
+}
+.area2 .bigbox .priyanshu{
+    color: white;
+    opacity: 0;
+    transition: 2s;
+    transform: translateY(60px);
+    display: flex;
+    justify-content: center;
+    font-size: 6vh;
+    /* background-color: black; */
+    width: 100%;
+    height: 15%;
+}
+.area2 .bigbox .content{
+    border: 3px solid white;
+    border-radius: 3vh;
+    transition: 2s;
+    transform: translateY(60px);
+    opacity: 0;
+    /* background-color: blue; */
+    display: flex;
+    align-items: center;
+    font-size: 2.5vh;
+    color: white;
+    text-align: center;
+    width: 100%;
+    height: 74%;
+    padding: 0 4vh;
+}
+
+/* ---------------------------------------------- */
+.page-three{
+    height: 100vh;
+    width: 100%;
+    background-color: rgb(19, 19, 58);
+}
+.area3{
+    display: flex;
+    justify-content: center;
+    /* align-items: center; */
+    height: 100vh;
+    width: 100%;
+}
+.bigbox1{
+    margin-top: 10vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 90vh;
+    width: 90%;
+    /* background-color: red; */
+}
+.mySkills{
+    transition: 2s;
+    position: relateive;
+    transform: translateY(60px);
+    opacity: 0;
+    color: white;
+    font-family: 'Sofia Sans', sans-serif;
+    height: 10%;
+    width: 100%;
+    padding-top: 2vh;
+    font-size: 7vh;
+    text-align: center;
+    /* background-color: orange; */
+}
+.langs{
+    transition: 2s;
+    height: 95%;
+    width: 100%;
+    opacity: 0;
+    transform: translateX(-50px);
+    /* background-color: green; */
+}
+.langs ul{
+    height: 100%;
+    width: 100%;
+    padding-top: 5vh;
+    padding-left: 3vh;
+    /* background-color: rgb(117, 117, 36); */
+}
+.langs ul li{
+    color: white;
+    font-family: 'Sofia Sans', sans-serif;
+    padding-top: 2vh;
+    list-style: none;
+    display: block;
+    font-size: 5vh;
+}
+
+.bar{
+    transition: 4s;
+    display: block;
+    margin-top: 1vh;
+    width: 0;
+    height: 1vh;
+    background-color: white;
+}
+
+/* ----------------------------------------------------------------- */
+.page-four{
+    width: 100%;
+    height: 100vh;
+    background-color: rgb(15, 84, 145);
+}

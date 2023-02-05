@@ -1,8 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
-// #include<conio.h>
 #define SSM 10
 #define CM 5
+#define DEM 5
+
+
 // simple static queue elements
 int ssrear = -1, ssfront = -1;
 int ssqueue[SSM];
@@ -14,7 +16,7 @@ void ssdisplay();
 struct sdnode
 {
   int sdvalue;
-  sdnode *sdnext;
+  struct sdnode *sdnext;
 };
 struct sdnode *sdfront = NULL;
 struct sdnode *sdrear = NULL;
@@ -24,15 +26,24 @@ void sdpush();
 void sdpop();
 void sddisplay();
 
-// circular static queue elements
+// circular queue elements
 
 int cfront = -1;
 int crear = -1;
 int cqueue[CM];
-int ctemp = cfront;
+int ctemp = -1;
 void cpush();
 void cpop();
 void cdisplay();
+
+//double ended queue elements
+int dequeue[DEM];
+int defront=-1;
+int derear=-1;
+int detemp;
+void depush();
+void depop();
+void dedisplay();
 
 int main()
 {
@@ -41,6 +52,7 @@ int main()
   int simplestaticchoice;
   int simpledynamicchoice;
   int circularchoice; //because circular doesn't have dynamic so no need for circularstatichcoice
+  int doubleendedchoice;
   do
   {
     printf("\n<----------MENU--------->\n");
@@ -59,17 +71,17 @@ int main()
     case 1:
       do
       {
-        printf("\nHow to Implement?\n");
-        printf("1:Statically\n");
-        printf("2:Dynamically\n");
-        printf("3:Exit\n");
-        printf("Choice:");
-        scanf("%d", &typeofsimplequeue);
-        switch (typeofsimplequeue)
-        {
+	printf("\nHow to Implement?\n");
+	printf("1:Statically\n");
+	printf("2:Dynamically\n");
+	printf("3:Exit\n");
+	printf("Choice:");
+	scanf("%d", &typeofsimplequeue);
+	switch (typeofsimplequeue)
+	{
 
-        // for Simple Static Queue
-        case 1:
+	// for Simple Static Queue
+	case 1:
           do
           {
             printf("\nWhich Operation to Perform?\n");
@@ -169,7 +181,32 @@ int main()
 
     // for Double Ended queue
     case 3:
-      printf("\nDouble Ended queue under maintenance\n");
+      do
+      {
+        printf("\nWhich Operation to Perform?\n");
+        printf("1:Insert\n");
+        printf("2:Delete\n");
+        printf("3:Display\n");
+        printf("4:Exit\n");
+        printf("Choice:\n");
+        scanf("%d", &doubleendedchoice);
+        switch (doubleendedchoice)
+        {
+        case 1:
+          depush();
+          break;
+        case 2:
+          depop();
+          break;
+        case 3:
+          dedisplay();
+          break;
+        case 4:
+          break;
+        default:
+          printf("Invalid Choice\n");
+        }
+      } while (doubleendedchoice != 4);
       break;
 
     // for Priority queue
@@ -353,10 +390,128 @@ void cdisplay()
   }
   else
   {
-    ctemp = cfront + 1;
-    for (ctemp; ctemp <= crear; ctemp++)
+    for (ctemp=cfront+1; ctemp <= crear; ctemp++)
     {
       printf("%d\n", cqueue[ctemp]);
     }
+  }
+}
+
+//<-------------double ended queue------------->
+void depush(){
+  int dechoice,num;
+  printf("Add Elements from frontend or rearend??\n");
+  printf("1: Rear\n");
+  printf("2: Front\n");
+  printf("Choice:");
+  scanf("%d",&dechoice);
+
+  if(dechoice==1){
+    printf("Enter the Element:");
+    scanf("%d",&num);
+    if(derear+1 == DEM){
+      printf("Queue Overflow\n");
+    }
+    else if(defront == -1){
+      defront =0;
+      derear=0;
+      derear++;
+      dequeue[derear]=num;
+    }
+    else{
+      derear++;
+      dequeue[derear]=num;
+    }
+  }
+
+  else if(dechoice==2){
+    printf("Enter the Element:");
+    scanf("%d",&num);
+    if(defront==-1 || defront == 0){
+      printf("No space before frontend\n");
+    }
+    else{
+      dequeue[defront]=num;
+      defront--;
+    }
+  }
+  else{
+    printf("Invalid choice\n");
+  }
+}
+
+void depop(){
+  int choice;
+  printf("Remove Elements from frontend or rearend??\n");
+  printf("1: Front\n");
+  printf("2: Rear\n");
+  printf("Choice:");
+  scanf("%d",&choice);
+  if(choice==1){
+    if(defront==-1){
+      printf("Queue is empty\n");
+    }
+    else{
+      defront++;
+      printf("Removed element:%d\n",dequeue[defront]);
+      if(defront==derear && defront != -1){
+        defront=-1;
+        derear=-1;
+      }
+    }
+  }
+
+  else if(choice==2){
+    if(defront==-1){
+      printf("Queue is empty\n");
+    }
+    else{
+      printf("Removed element:%d\n",dequeue[derear]);
+      derear--;
+      if(defront==derear && defront != -1){
+        defront=-1;
+        derear=-1;
+      }
+    }
+  }
+  else{
+    printf("Invalid choice\n");
+  }
+}
+
+void dedisplay(){
+  int choice;
+  printf("Display Elements from frontend or rearend??\n");
+  printf("1: Front\n");
+  printf("2: Rear\n");
+  printf("Choice:");
+  scanf("%d",&choice);
+  if(choice==1){
+    if(defront==-1){
+      printf("Queue Empty\n");
+    }
+    else{
+      detemp=defront+1;
+      while(detemp<=derear){
+        printf("%d\n",dequeue[detemp]);
+        detemp++;
+      }
+    }
+  }
+
+  else if(choice == 2){
+    if(defront==-1){
+      printf("Queue Empty\n");
+    }
+    else{
+      detemp=derear;
+      while(detemp>defront){
+        printf("%d\n",dequeue[detemp]);
+        detemp--;
+      }
+    }
+  }
+  else{
+    printf("Invalid choice\n");
   }
 }
