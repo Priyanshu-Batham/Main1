@@ -15,17 +15,89 @@ struct node *sllnewnode;
 void sllins();
 void slldel();
 void slldisplay();
+void sllsearch();
 
 // ------------------------------------------------------------------------>>>>>>>>>>>>>
 int main()
 {
+  int typeofll;
+  int simplellchoice;
+  int simpledynamicchoice;
+  int circularchoice; // because circular doesn't have dynamic so no need for circularstatichcoice
+  int doubleendedchoice;
   clrscr();
-  sllins();
-  sllins();
-  slldisplay();
-  slldel();
-  slldel();
-  getch();
+  do
+  {
+    printf("\n<----------MENU--------->\n");
+    printf("Which Linked List to use?\n");
+    printf("1:Simple Linked List\n");
+    printf("2:Circular Linked List\n");
+    printf("3:DoubleEnded Linked List\n");
+    printf("4:Circular Doubly Linked List\n");
+    printf("5:Exit\n");
+    printf("Choice:");
+    scanf("%d", &typeofll);
+    switch (typeofll)
+    {
+      // For Simple ll
+    case 1:
+      do
+      {
+        printf("\nWhich Operation to perform?\n");
+        printf("1:Insert Element\n");
+        printf("2:Delete Element\n");
+        printf("3:Display Element\n");
+        printf("4:Search Element\n");
+        printf("5:Exit\n");
+        printf("Choice:");
+        scanf("%d", &simplellchoice);
+        switch (simplellchoice)
+        {
+        case 1:
+          sllins();
+          break;
+        case 2:
+          slldel();
+          break;
+        case 3:
+          slldisplay();
+          break;
+        case 4:
+          sllsearch();
+          break;
+        case 5:
+          break;
+        default:
+          printf("Invalid Choice\n");
+        }
+      } while (simplellchoice != 5);
+      break;
+
+    // circular ll
+    case 2:
+      printf("Circular Linked List under maintenance\n");
+      break;
+
+    // double ll
+    case 3:
+      printf("Doubly Linked List under maintenance\n");
+      break;
+
+    // cicular double ll
+    case 4:
+      printf("Circular Doubly Linked List under maintenance\n");
+      break;
+
+    // exit
+    case 5:
+      break;
+
+    default:
+      printf("Invalid Choice\n");
+      break;
+    }
+  } while (typeofll != 5);
+
   return 0;
 }
 // ------------------------------------------------------------------------>>>>>>>>>>>>>
@@ -129,7 +201,7 @@ void slldisplay()
 
 void slldel()
 {
-  int pos, choice, i;
+  int pos, choice, i, data;
   if (sllfront == NULL)
   {
     printf("No Element in linked list\n");
@@ -140,7 +212,8 @@ void slldel()
     printf("1: Front\n");
     printf("2: Rear\n");
     printf("3: Between\n");
-    printf("4: Exit\n");
+    printf("4: Data wise\n");
+    printf("5: Exit\n");
     printf("Choice:");
     scanf("%d", &choice);
 
@@ -245,6 +318,104 @@ void slldel()
           }
         }
       }
+    }
+    else if (choice == 4)
+    {
+      printf("Enter the data:");
+      scanf("%d", &data);
+      slltemp = sllfront;
+      while (slltemp != NULL)
+      {
+        // if only one node
+        if (sllfront->sllnext == NULL)
+        {
+          if (sllfront->slldata == data)
+          {
+            printf("%d deleted\n", sllfront->slldata);
+            sllfront = sllfront->sllnext;
+            break;
+          }
+          else{
+            printf("%d not found\n",data);
+            break;
+          }
+        }
+
+        // data is at first node
+        if (sllfront->slldata == data)
+        {
+          printf("%d deleted\n", sllfront->slldata);
+          sllfront = sllfront->sllnext;
+          break;
+        }
+
+        // data is at last node
+        if (slltemp->sllnext->sllnext == NULL)
+        {
+          if (slltemp->sllnext->slldata == data)
+          {
+            printf("%d deleted from last\n", slltemp->sllnext->slldata);
+            free(sllrear);
+            sllrear = slltemp;
+            sllrear->sllnext = NULL;
+            break;
+          }
+          else
+          {
+            printf("%d not found\n", data);
+            break;
+          }
+        }
+
+        // data is at middle position
+        if (slltemp->sllnext->slldata == data)
+        {
+          printf("%d deleted\n", slltemp->sllnext->slldata);
+          slldestruct = slltemp->sllnext;
+          slltemp->sllnext = slltemp->sllnext->sllnext;
+          free(slldestruct);
+          break;
+        }
+        slltemp = slltemp->sllnext;
+      }
+    }
+    else if (choice == 5)
+    {
+      printf("\nExited\n");
+    }
+    else
+    {
+      printf("Invalid Choice\n");
+    }
+  }
+}
+
+void sllsearch()
+{
+  int search, count = 1;
+  if (sllfront == NULL)
+  {
+    printf("Linked List is Empty\n");
+  }
+  else
+  {
+    printf("Enter the data to be searched:");
+    scanf("%d", &search);
+    slltemp = sllfront;
+    while (slltemp != NULL)
+    {
+      if (slltemp->slldata == search)
+      {
+        printf("%d is at %d position\n", search, count);
+        break;
+      }
+      if (slltemp->sllnext == NULL)
+      {
+        printf("Element not found\n");
+        break;
+      }
+      slltemp = slltemp->sllnext;
+      count++;
     }
   }
 }

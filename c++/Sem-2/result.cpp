@@ -4,11 +4,11 @@ using namespace std;
 
 class Result{
     private:
-    int rollno;
     string name;
     float sgpa;
 
     public:
+    int rollno;
     //default constructor
     Result(){
         rollno = 0;
@@ -37,6 +37,7 @@ class Result{
         cout<<"Name:"<<name<<endl;
         cout<<"Sgpa:"<<sgpa<<endl;
     }
+    ~Result(){};
 };
 
 int main(){
@@ -51,23 +52,23 @@ int main(){
         cout<<"Choice:";
         cin>>choice;
         switch(choice){
+            
         case 1:
             student[i].insert();
             i++;
             break;
 
         case 2:
-            // cout<<"\nEnter the roll no:";
-            // cin>>roll;
-            // for(int j = 0;j<5;j++){
-            //     if(roll == student[j].rollno){
-            //         student[j].display();
-            //         break;
-            //     }
-            // }
-
-            for(int j=0;j<5;j++){
-                student[j].display();
+            cout<<"\nEnter the roll no:";
+            cin>>roll;
+            for(int j = 0;j<=5;j++){
+                if(j==5){
+                    cout<<"No details with "<<roll<<" Roll No\n";
+                }
+                if(roll == student[j].rollno){
+                    student[j].display();
+                    break;
+                }
             }
 
         case 3:
