@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <conio.h>
 
+// simple linked list declarations-------------------------->>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 struct node
 {
   int slldata;
@@ -17,12 +17,28 @@ void slldel();
 void slldisplay();
 void sllsearch();
 
+// cirular linked list declarations------------------------------------------->>>>>>>>>>>>>>>>>>>>>>>>>
+struct cllnode
+{
+  int clldata;
+  struct cllnode *cllnext;
+};
+struct cllnode *cllfront = NULL;
+struct cllnode *cllrear = NULL;
+struct cllnode *clltemp = NULL;
+struct cllnode *clldestruct = NULL;
+struct cllnode *cllnewnode;
+void cllins();
+void clldel();
+void clldisplay();
+void cllsearch();
+
 // ------------------------------------------------------------------------>>>>>>>>>>>>>
 int main()
 {
   int typeofll;
   int simplellchoice;
-  int simpledynamicchoice;
+  int circularllchoice;
   int circularchoice; // because circular doesn't have dynamic so no need for circularstatichcoice
   int doubleendedchoice;
   // clrscr();
@@ -75,7 +91,36 @@ int main()
 
     // circular ll
     case 2:
-      printf("Circular Linked List under maintenance\n");
+      do
+      {
+        printf("\nWhich Operation to perform?\n");
+        printf("1:Insert Element\n");
+        printf("2:Delete Element\n");
+        printf("3:Display Element\n");
+        printf("4:Search Element\n");
+        printf("5:Exit\n");
+        printf("Choice:");
+        scanf("%d", &circularllchoice);
+        switch (circularllchoice)
+        {
+        case 1:
+          cllins();
+          break;
+        case 2:
+          clldel();
+          break;
+        case 3:
+          clldisplay();
+          break;
+        case 4:
+          cllsearch();
+          break;
+        case 5:
+          break;
+        default:
+          printf("Invalid Choice\n");
+        }
+      } while (circularllchoice != 5);
       break;
 
     // double ll
@@ -208,6 +253,7 @@ void slldel()
   }
   else
   {
+    /*
     printf("From where to delete the element?\n");
     printf("1: Front\n");
     printf("2: Rear\n");
@@ -221,17 +267,17 @@ void slldel()
     {
       if (sllfront->sllnext == NULL) // there's only one element in the linked list
       {
-        printf("Removed Element:%d\n", sllfront->slldata);
-        free(sllfront);
-        sllfront = NULL;
-        sllrear = NULL;
+  printf("Removed Element:%d\n", sllfront->slldata);
+  free(sllfront);
+  sllfront = NULL;
+  sllrear = NULL;
       }
       else
       {
-        printf("Removed Element:%d\n", sllfront->slldata);
-        slltemp = sllfront;
-        sllfront = sllfront->sllnext;
-        free(slltemp);
+  printf("Removed Element:%d\n", sllfront->slldata);
+  slltemp = sllfront;
+  sllfront = sllfront->sllnext;
+  free(slltemp);
       }
     }
 
@@ -239,21 +285,21 @@ void slldel()
     {
       if (sllfront->sllnext == NULL) // there's only one element in the linked list
       {
-        printf("Removed Element:%d\n", sllfront->slldata);
-        free(sllfront);
-        sllfront = NULL;
-        sllrear = NULL;
+  printf("Removed Element:%d\n", sllfront->slldata);
+  free(sllfront);
+  sllfront = NULL;
+  sllrear = NULL;
       }
       else
       {
-        slltemp = sllfront;
-        while (slltemp->sllnext != sllrear)
-        {
-          slltemp = slltemp->sllnext;
-        }
-        printf("Removed Element:%d\n", sllrear->slldata);
-        free(sllrear);
-        sllrear = slltemp;
+  slltemp = sllfront;
+  while (slltemp->sllnext != sllrear)
+  {
+    slltemp = slltemp->sllnext;
+  }
+  printf("Removed Element:%d\n", sllrear->slldata);
+  free(sllrear);
+  sllrear = slltemp;
       }
     }
 
@@ -264,130 +310,133 @@ void slldel()
 
       if (pos == 1)
       {                          // algo to delete element from front:
-        if (sllfront == sllrear) // if there is only one element in the linked list
-        {                        // and pos1 element is to be deleted
-          printf("Removed Element:%d\n", sllfront->slldata);
-          free(sllfront);
-          sllfront = NULL;
-          sllrear = NULL;
-        }
-        else
-        { // if there are more than one element in the list
-          printf("Removed Element:%d\n", sllfront->slldata);
-          slltemp = sllfront;
-          sllfront = sllfront->sllnext;
-          free(slltemp);
-        }
+  if (sllfront == sllrear) // if there is only one element in the linked list
+  {                        // and pos1 element is to be deleted
+    printf("Removed Element:%d\n", sllfront->slldata);
+    free(sllfront);
+    sllfront = NULL;
+    sllrear = NULL;
+  }
+  else
+  { // if there are more than one element in the list
+    printf("Removed Element:%d\n", sllfront->slldata);
+    slltemp = sllfront;
+    sllfront = sllfront->sllnext;
+    free(slltemp);
+  }
       }
       else if (pos == 2)
       { // for deleting position 2 element
-        slltemp = sllfront->sllnext;
-        sllfront->sllnext = slltemp->sllnext;
-        printf("Removed Element:%d\n", slltemp->slldata);
-        free(slltemp);
+  slltemp = sllfront->sllnext;
+  sllfront->sllnext = slltemp->sllnext;
+  printf("Removed Element:%d\n", slltemp->slldata);
+  free(slltemp);
       }
       else
       {
-        if (sllfront == sllrear) // there's only one element in the linked list
-        {
-          printf("Removed Element:%d\n", sllfront->slldata);
-          free(sllfront);
-          sllfront = NULL;
-          sllrear = NULL;
-        }
-        else
-        {
-          slltemp = sllfront;
-          for (i = 1; i < pos - 1; i++)
-          {
-            if (slltemp->sllnext == sllrear)
-            {
-              printf("Removed Element:%d\n", sllrear->slldata);
-              sllrear = slltemp;
-              break;
-            }
-            else if (i == pos - 2)
-            {
-              slldestruct = slltemp->sllnext;
-              printf("Removed Element:%d\n", slldestruct->slldata);
-              slltemp->sllnext = slldestruct->sllnext;
-              free(slldestruct);
-              break;
-            }
-            slltemp = slltemp->sllnext;
-          }
-        }
+  if (sllfront == sllrear) // there's only one element in the linked list
+  {
+    printf("Removed Element:%d\n", sllfront->slldata);
+    free(sllfront);
+    sllfront = NULL;
+    sllrear = NULL;
+  }
+  else
+  {
+    slltemp = sllfront;
+    for (i = 1; i < pos - 1; i++)
+    {
+      if (slltemp->sllnext == sllrear)
+      {
+        printf("Removed Element:%d\n", sllrear->slldata);
+        sllrear = slltemp;
+        break;
+      }
+      else if (i == pos - 2)
+      {
+        slldestruct = slltemp->sllnext;
+        printf("Removed Element:%d\n", slldestruct->slldata);
+        slltemp->sllnext = slldestruct->sllnext;
+        free(slldestruct);
+        break;
+      }
+      slltemp = slltemp->sllnext;
+    }
+  }
       }
     }
     else if (choice == 4)
     {
-      printf("Enter the data:");
-      scanf("%d", &data);
-      slltemp = sllfront;
-      while (slltemp != NULL)
+    */
+    printf("Enter the data:");
+    scanf("%d", &data);
+    slltemp = sllfront;
+    while (slltemp != NULL)
+    {
+      // if only one node
+      if (sllfront->sllnext == NULL)
       {
-        // if only one node
-        if (sllfront->sllnext == NULL)
-        {
-          if (sllfront->slldata == data)
-          {
-            printf("%d deleted\n", sllfront->slldata);
-            sllfront = sllfront->sllnext;
-            break;
-          }
-          else{
-            printf("%d not found\n",data);
-            break;
-          }
-        }
-
-        // data is at first node
         if (sllfront->slldata == data)
         {
           printf("%d deleted\n", sllfront->slldata);
           sllfront = sllfront->sllnext;
           break;
         }
-
-        // data is at last node
-        if (slltemp->sllnext->sllnext == NULL)
+        else
         {
-          if (slltemp->sllnext->slldata == data)
-          {
-            printf("%d deleted from last\n", slltemp->sllnext->slldata);
-            free(sllrear);
-            sllrear = slltemp;
-            sllrear->sllnext = NULL;
-            break;
-          }
-          else
-          {
-            printf("%d not found\n", data);
-            break;
-          }
-        }
-
-        // data is at middle position
-        if (slltemp->sllnext->slldata == data)
-        {
-          printf("%d deleted\n", slltemp->sllnext->slldata);
-          slldestruct = slltemp->sllnext;
-          slltemp->sllnext = slltemp->sllnext->sllnext;
-          free(slldestruct);
+          printf("%d not found\n", data);
           break;
         }
-        slltemp = slltemp->sllnext;
       }
-    }
-    else if (choice == 5)
-    {
-      printf("\nExited\n");
-    }
-    else
-    {
-      printf("Invalid Choice\n");
+
+      // data is at first node
+      if (sllfront->slldata == data)
+      {
+        printf("%d deleted\n", sllfront->slldata);
+        sllfront = sllfront->sllnext;
+        break;
+      }
+
+      // data is at last node
+      if (slltemp->sllnext->sllnext == NULL)
+      {
+        if (slltemp->sllnext->slldata == data)
+        {
+          printf("%d deleted from last\n", slltemp->sllnext->slldata);
+          free(sllrear);
+          sllrear = slltemp;
+          sllrear->sllnext = NULL;
+          break;
+        }
+        else
+        {
+          printf("%d not found\n", data);
+          break;
+        }
+      }
+
+      // data is at middle position
+      if (slltemp->sllnext->slldata == data)
+      {
+        printf("%d deleted\n", slltemp->sllnext->slldata);
+        slldestruct = slltemp->sllnext;
+        slltemp->sllnext = slltemp->sllnext->sllnext;
+        free(slldestruct);
+        break;
+      }
+      slltemp = slltemp->sllnext;
     }
   }
+  /* }
+   else if (choice == 5)
+   {
+     printf("\nExited\n");
+   }
+   else
+   {
+     printf("Invalid Choice\n");
+   }
+ }*/
 }
 
 void sllsearch()
@@ -418,4 +467,114 @@ void sllsearch()
       count++;
     }
   }
+}
+
+// circular linked list----------------------------------------------------------------------------------->>>>>>>>>>>>>>>>>>>
+void cllins()
+{
+  int choice, pos, i;
+  cllnewnode = (struct cllnode *)malloc(sizeof(struct cllnode));
+  printf("Enter the value:");
+  scanf("%d", &cllnewnode->clldata);
+  cllnewnode->cllnext = cllfront;
+
+  if (cllfront == NULL)
+  {
+    cllfront = cllnewnode;
+    cllrear = cllnewnode;
+    cllnewnode->cllnext = cllfront;
+  }
+  else
+  {
+    printf("Where to Insert?\n");
+    printf("1 Front\n");
+    printf("2 Rear\n");
+    printf("3 Between\n");
+    printf("4 Exit\n");
+    printf("Choice:");
+    scanf("%d", &choice);
+    if (choice == 1)
+    {
+      cllnewnode->cllnext = cllfront;
+      cllfront = cllnewnode;
+      cllrear->cllnext = cllfront;
+    }
+    else if (choice == 2)
+    {
+      cllrear->cllnext = cllnewnode;
+      cllrear = cllnewnode;
+      cllrear->cllnext = cllfront;
+    }
+    else if (choice == 3)
+    {
+      printf("Enter the position of insertion:");
+      scanf("%d", &pos);
+      if (pos == 1)
+      {
+        cllnewnode->cllnext = cllfront;
+        cllfront = cllnewnode;
+        cllrear->cllnext = cllfront;
+      }
+      else if (pos == 2)
+      {
+        cllnewnode->cllnext = cllfront->cllnext;
+        cllfront->cllnext = cllnewnode;
+      }
+      else
+      {
+        clltemp = cllfront->cllnext;
+        for (i = 2; i < pos; i++)
+        {
+          if (clltemp == cllrear)
+          {
+            cllrear->cllnext = cllnewnode; // insert from rear
+            cllrear = cllnewnode;
+            cllrear->cllnext = cllfront;
+            break;
+          }
+          else if (i == pos - 1)
+          {
+            cllnewnode->cllnext = clltemp->cllnext;
+            clltemp->cllnext = cllnewnode;
+            break;
+          }
+          clltemp = clltemp->cllnext;
+        }
+      }
+    }
+    else if (choice == 4)
+    {
+      exit(0);
+    }
+    else
+    {
+      printf("Invalid choice");
+    }
+  }
+}
+
+void clldel(){
+  printf("to be done soon\n");
+}
+
+void clldisplay(){
+  int choice;
+
+  if (cllfront == NULL)
+  {
+    printf("No elements in linked list!!!\n");
+  }
+  else
+  {
+    clltemp = cllfront;
+    do
+    {
+      printf("%d\n", clltemp->clldata);
+      clltemp = clltemp->cllnext;
+    }while (clltemp != cllfront);
+  }
+}
+
+void cllsearch(){
+  printf("to be done soon\n");
 }

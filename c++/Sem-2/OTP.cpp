@@ -1,33 +1,45 @@
-#include<iostream>
-#include<conio.h>
-#include<unistd.h>
-#include<stdlib.h>
+#include <iostream>
+#include <conio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <time.h>
+
 using namespace std;
-int main(){
-    int otp[5],num,flag=0;
-    cout<<"Generating OTP..."<<endl;
-    for(int i=0;i<5;i++){
-        otp[i]=rand()%1000;
-        cout<<otp[i]<<endl;
+
+int main()
+{   
+    srand( time( NULL ) );
+    int l[10], o, i = 0, choice = 0, t1, t2, t;
+    for (i = 0; i < 10; i++)
+    {
+        l[i] = rand() % 100;
     }
-    sleep(3);
-    system("cls");
-    
-    cout<<"Enter the otp (within 3 second):";
-    cin>>num;
-    
-    for(int i=0;i<5;i++){
-        if(otp[i]==num){
-            flag=1;
+    i = 0;
+    do
+    {
+        cout << "The OTP is : " << l[i] << "\nIt is expiring in 10 seconds" << endl;
+        t1 = time(0);
+        cout << "Enter your OTP : ";
+        cin >> o;
+        t2 = time(0);
+        t = t2 - t1;
+        if (o == l[i] && t <= 10)
+        {
+            cout << "OTP matched.";
             break;
         }
-    }
-    if(flag==1){
-        cout<<"Valid OTP";
-    }
-    else{
-        cout<<"Invalid OTP";
-    }
-    getch();       
+        else if (o == l[i] && t > 10)
+        {
+            cout << "This OTP is expired.\nEnter 1 for new OTP : ";
+            cin >> choice;
+        }
+        else
+        {
+            cout << "Wrong OTP...\nEnter 1 for new OTP : ";
+            cin >> choice;
+        }
+        i++;
+    } while (choice == 1);
+    // getch();
     return 0;
 }
