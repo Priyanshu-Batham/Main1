@@ -102,7 +102,7 @@
 }
 
 .me .myName {
-    color: white;
+    color: rgb(255, 255, 255);
     font-family: 'Satisfy', cursive;
     height: 30%;
     width: 100%;
@@ -626,6 +626,7 @@
     border-radius: 10px;
     padding-bottom: 2px;
     width: 60%;
+    height: 80%;
     border: 3px solid goldenrod;
     text-decoration: none;
     flex-direction: column;
