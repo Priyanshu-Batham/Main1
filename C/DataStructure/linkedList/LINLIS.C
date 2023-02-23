@@ -58,7 +58,7 @@ int main()
   int circularllchoice;
   int doublychoice; // because circular doesn't have dynamic so no need for circularstatichcoice
   int doublycircularchoice;
-  clrscr();
+  // clrscr();
   do
   {
     printf("\n<----------MENU--------->\n");
@@ -791,10 +791,193 @@ void dllins()
   }
 }
 
-void dlldel(){
-  printf("TO be done soon :)\n");
-}
+void dlldel()
+{
+  int pos, choice, i, data;
+  if (dllfront == NULL)
+  {
+    printf("No Element in linked list\n");
+  }
+  else
+  {
 
+    printf("From where to delete the element?\n");
+    printf("1: Front\n");
+    printf("2: Rear\n");
+    printf("3: Between\n");
+    printf("4: Data wise\n");
+    printf("5: Exit\n");
+    printf("Choice:");
+    scanf("%d", &choice);
+
+    if (choice == 1)
+    {
+      if (dllfront->dllnext == NULL) // there's only one element in the linked list
+      {
+        printf("Removed Element:%d\n", dllfront->dlldata);
+        free(dllfront);
+        dllfront = NULL;
+        dllrear = NULL;
+        dllCtr--;
+      }
+      else
+      {
+        printf("Removed Element:%d\n", dllfront->dlldata);
+        dlltemp = dllfront;
+        dllfront = dllfront->dllnext;
+        dllfront->dllprev = NULL;
+        free(dlltemp);
+        dllCtr--;
+      }
+    }
+
+    else if (choice == 2)
+    {
+      if (dllfront->dllnext == NULL) // there's only one element in the linked list
+      {
+        printf("Removed Element:%d\n", dllfront->dlldata);
+        free(dllfront);
+        dllfront = NULL;
+        dllrear = NULL;
+        dllCtr--;
+      }
+      else
+      {
+        dllrear = dllrear->dllprev;
+        free(dllrear->dllnext);
+        dllrear->dllnext = NULL;
+        dllCtr--;
+      }
+    }
+
+    else if (choice == 3)
+    {
+      printf("Enter the position:");
+      scanf("%d", &pos);
+
+      if (pos > dllCtr)
+      {
+        printf("No element on position %d\n", pos);
+      }
+      else if (pos == 1)
+      {                          // algo to delete element from front:
+        if (dllfront == dllrear) // if there is only one element in the linked list
+        {                        // and pos1 element is to be deleted
+          printf("Removed Element:%d\n", dllfront->dlldata);
+          free(dllfront);
+          dllfront = NULL;
+          dllrear = NULL;
+          dllCtr--;
+        }
+        else
+        { // if there are more than one element in the list
+          printf("Removed Element:%d\n", dllfront->dlldata);
+          dlltemp = dllfront;
+          dllfront = dllfront->dllnext;
+          dllfront->dllprev = NULL;
+          free(dlltemp);
+          dllCtr--;
+        }
+      }
+
+      else
+      {
+        dlltemp = dllfront;
+        for (i = 1; i <= pos; i++)
+        {
+          dlltemp = dlltemp->dllnext;
+        }
+
+        if (dlltemp == dllrear)
+        {
+          printf("Removed Element:%d\n", dllrear->dlldata);
+          dllrear = dllrear->dllprev;
+          free(dllrear->dllnext);
+          dllrear->dllnext = NULL;
+          dllCtr--;
+        }
+        else
+        {
+          printf("Removed Element:%d\n", dlltemp->dlldata);
+          dlltemp->dllprev->dllnext = dlltemp->dllnext;
+          dlltemp->dllnext->dllprev = dlltemp->dllprev;
+          free(dlltemp);
+          dllCtr--;
+        }
+      }
+    }
+    else if (choice == 4)
+    {
+
+      printf("Enter the data:");
+      scanf("%d", &data);
+      dlltemp = dllfront;
+      while (dlltemp != NULL)
+      {
+        // if only one node
+        if (dllfront->dllnext == NULL)
+        {
+          if (dllfront->dlldata == data)
+          {
+            printf("%d deleted\n", dllfront->dlldata);
+            free(dllfront);
+            dllfront = NULL;
+            dllrear = NULL;       
+            dllCtr--;   
+          }
+          else
+          {
+            printf("%d not found\n", data);
+          }
+          break;
+        }
+
+        // data is at first node
+        if (dllfront->dlldata == data)
+        {
+          printf("%d deleted\n", dllfront->dlldata);
+          dllfront = dllfront->dllnext;
+          free(dllfront->dllprev);
+          dllfront->dllprev = NULL;
+          dllCtr--;
+          break;
+        }
+
+        // data is at last node
+        if (dllrear->dlldata == data)
+        {
+          printf("%d deleted\n", dllrear->dlldata);
+          dllrear = dllrear->dllprev;
+          free(dllrear->dllnext);
+          dllrear->dllnext = NULL;
+          dllCtr--;
+          break;
+        }
+
+        // data is at middle position
+        if (dlltemp->dlldata == data)
+        {
+          printf("%d deleted\n", dlltemp->dlldata);
+          dlltemp->dllprev->dllnext = dlltemp->dllnext;
+          dlltemp->dllnext->dllprev = dlltemp->dllprev;
+          free(dlltemp);
+          dllCtr--;
+          break;
+        }
+        dlltemp = dlltemp->dllnext;
+      }
+    }
+
+    else if (choice == 5)
+    {
+      printf("\nExited\n");
+    }
+    else
+    {
+      printf("Invalid Choice\n");
+    }
+  }
+}
 
 void dlldisplay()
 {

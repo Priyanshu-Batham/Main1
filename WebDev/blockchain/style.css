@@ -1,0 +1,31 @@
+*{
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+
+.area1{
+    background-color: black;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    width: 100vw;
+    height: 100vh;
+}
+.heading{
+    font-weight: 5vh;
+    font-size: 5vh;
+    text-align: center;
+    width: 100%;
+    height: 5vh;
+    color: white;
+    margin: auto;
+}
+.block{
+    color: white;
+    /* background-color: rgb(237, 149, 149); */
+    margin: auto;
+    width: 90%;
+    height: 90%;
+}
