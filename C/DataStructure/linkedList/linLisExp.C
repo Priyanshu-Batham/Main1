@@ -50,6 +50,24 @@ void dllins();
 void dlldel();
 void dlldisplay();
 
+// Doubly-Circular linked list declarations------------------------------------------->>>>>>>>>>>>>>>>>>>>>>>>>
+struct dcllnode
+{
+  int dclldata;
+  struct dcllnode *dcllnext;
+  struct dcllnode *dcllprev;
+};
+struct dcllnode *dcllnewnode;
+struct dcllnode *dcllfront = NULL;
+struct dcllnode *dcllrear = NULL;
+struct dcllnode *dclltemp = NULL;
+struct dcllnode *dclldestruct = NULL;
+int dcllCtr = 0;
+
+void dcllins();
+void dclldel();
+void dclldisplay();
+
 // ------------------------------------------------------------------------>>>>>>>>>>>>>
 int main()
 {
@@ -172,7 +190,32 @@ int main()
 
     // cicular double ll
     case 4:
-      printf("Circular Doubly Linked List under maintenance\n");
+      do
+      {
+        printf("\nWhich Operation to perform?\n");
+        printf("1:Insert Element\n");
+        printf("2:Delete Element\n");
+        printf("3:Display Element\n");
+        printf("4:Exit\n");
+        printf("Choice:");
+        scanf("%d", &doublycircularchoice);
+        switch (doublycircularchoice)
+        {
+        case 1:
+          dcllins();
+          break;
+        case 2:
+          dclldel();
+          break;
+        case 3:
+          dclldisplay();
+          break;
+        case 4:
+          break;
+        default:
+          printf("Invalid Choice\n");
+        }
+      } while (doublycircularchoice != 4);
       break;
 
     // exit
@@ -883,7 +926,7 @@ void dlldel()
       else
       {
         dlltemp = dllfront;
-        for (i = 1; i <= pos; i++)
+        for (i = 1; i < pos; i++)
         {
           dlltemp = dlltemp->dllnext;
         }
@@ -922,8 +965,8 @@ void dlldel()
             printf("%d deleted\n", dllfront->dlldata);
             free(dllfront);
             dllfront = NULL;
-            dllrear = NULL;       
-            dllCtr--;   
+            dllrear = NULL;
+            dllCtr--;
           }
           else
           {
@@ -996,5 +1039,322 @@ void dlldisplay()
       printf("%d\n", dlltemp->dlldata);
       dlltemp = dlltemp->dllnext;
     } while (dlltemp != NULL);
+  }
+}
+
+// Doubly-Circular linked list---------------------------------->>>>>>>>>>>>>>>>>>>>>>>>>>>
+void dcllins()
+{
+  int choice, pos, i;
+  dcllnewnode = (struct dcllnode *)malloc(sizeof(struct dcllnode));
+  printf("Enter the value:");
+  scanf("%d", &dcllnewnode->dclldata);
+  dcllnewnode->dcllnext = NULL;
+  dcllnewnode->dcllprev = NULL;
+
+  if (dcllfront == NULL)
+  {
+    dcllfront = dcllnewnode;
+    dcllrear = dcllnewnode;
+    dcllrear->dcllnext = dcllfront;
+    dcllfront->dcllprev = dcllrear;
+    dcllCtr++;
+  }
+  else
+  {
+    printf("Where to Insert?\n");
+    printf("1 Front\n");
+    printf("2 Rear\n");
+    printf("3 Between\n");
+    printf("4 Exit\n");
+    printf("Choice:");
+    scanf("%d", &choice);
+    if (choice == 1)
+    {
+      dcllnewnode->dcllnext = dcllfront;
+      dcllnewnode->dcllprev = dcllrear;
+      dcllfront->dcllprev = dcllnewnode;
+      dcllrear->dcllnext = dcllnewnode;
+      dcllfront = dcllnewnode;
+      dcllCtr++;
+    }
+    else if (choice == 2)
+    {
+      dcllnewnode->dcllprev = dcllrear;
+      dcllnewnode->dcllnext = dcllfront;
+      dcllrear->dcllnext = dcllnewnode;
+      dcllfront->dcllprev = dcllnewnode;
+      dcllrear = dcllnewnode;
+      dcllCtr++;
+    }
+    else if (choice == 3)
+    {
+      printf("Enter the position of insertion:");
+      scanf("%d", &pos);
+
+      if (pos > dcllCtr + 1)
+      // if user inputs stupid position number
+      {
+        printf("Linked list doesn't have this much data\n");
+      }
+      else if (pos == 1)
+      // means insert from the beginning
+      {
+        dcllnewnode->dcllnext = dcllfront;
+        dcllnewnode->dcllprev = dcllrear;
+        dcllfront->dcllprev = dcllnewnode;
+        dcllrear->dcllnext = dcllnewnode;
+        dcllfront = dcllnewnode;
+        dcllCtr++;
+      }
+      else if (pos == dcllCtr + 1)
+      // means insert from the end
+      {
+        dcllnewnode->dcllprev = dcllrear;
+        dcllnewnode->dcllnext = dcllfront;
+        dcllrear->dcllnext = dcllnewnode;
+        dcllfront->dcllprev = dcllnewnode;
+        dcllrear = dcllnewnode;
+        dcllCtr++;
+      }
+      else
+      // insert anywhere from second to second last location
+      {
+        dclltemp = dcllfront;
+        for (i = 1; i < pos; i++)
+        {
+          if (i == pos - 1)
+          {
+            dcllnewnode->dcllnext = dclltemp->dcllnext;
+            dcllnewnode->dcllprev = dclltemp;
+            dclltemp->dcllnext = dcllnewnode;
+            dcllnewnode->dcllnext->dcllprev = dcllnewnode;
+            break;
+          }
+          dclltemp = dclltemp->dcllnext;
+        }
+        dcllCtr++;
+      }
+    }
+    else if (choice == 4)
+    {
+      exit(0);
+    }
+    else
+    {
+      printf("Invalid choice");
+    }
+  }
+}
+
+void dclldel()
+{
+  int pos, choice, i, data;
+  if (dcllfront == NULL)
+  {
+    printf("No Element in linked list\n");
+  }
+  else
+  {
+
+    printf("From where to delete the element?\n");
+    printf("1: Front\n");
+    printf("2: Rear\n");
+    printf("3: Between\n");
+    printf("4: Data wise\n");
+    printf("5: Exit\n");
+    printf("Choice:");
+    scanf("%d", &choice);
+
+    if (choice == 1)
+    {
+      if (dcllfront->dcllnext == dcllfront) // there's only one element in the linked list
+      {
+        printf("Removed Element:%d\n", dcllfront->dclldata);
+        free(dcllfront);
+        dcllfront = NULL;
+        dcllrear = NULL;
+        dcllCtr--;
+      }
+      else
+      {
+        printf("Removed Element:%d\n", dcllfront->dclldata);
+        dcllrear->dcllnext = dcllfront->dcllnext;
+        dcllfront->dcllnext = dcllrear;
+        dcllfront = dcllfront->dcllnext;
+        free(dcllfront->dcllprev);
+        dcllCtr--;
+      }
+    }
+
+    else if (choice == 2)
+    {
+      if (dcllfront->dcllnext == dcllfront) // there's only one element in the linked list
+      {
+        printf("Removed Element:%d\n", dcllfront->dclldata);
+        free(dcllfront);
+        dcllfront = NULL;
+        dcllrear = NULL;
+        dcllCtr--;
+      }
+      else
+      {
+        printf("Removed Element:%d\n", dcllrear->dclldata);
+        dcllrear = dcllrear->dcllprev;
+        free(dcllrear->dcllnext);
+        dcllrear->dcllnext = dcllfront;
+        dcllfront->dcllprev = dcllrear;
+        dcllCtr--;
+      }
+    }
+
+    else if (choice == 3)
+    {
+      printf("Enter the position:");
+      scanf("%d", &pos);
+
+      if (pos > dcllCtr)
+      {
+        printf("No element on position %d\n", pos);
+      }
+      else if (pos == 1)
+      {                          // algo to delete element from front:
+        if (dcllfront == dcllrear) // if there is only one element in the linked list
+        {                        // and pos1 element is to be deleted
+          printf("Removed Element:%d\n", dcllfront->dclldata);
+          free(dcllfront);
+          dcllfront = NULL;
+          dcllrear = NULL;
+          dcllCtr--;
+        }
+        else
+        { // if there are more than one element in the list
+          printf("Removed Element:%d\n", dcllfront->dclldata);
+          dcllfront = dcllfront->dcllnext;
+          free(dcllfront->dcllprev);
+          dcllfront->dcllprev = dcllrear;
+          dcllrear->dcllnext = dcllfront;
+          dcllCtr--;
+        }
+      }
+
+      else
+      {
+        dclltemp = dcllfront;
+        for (i = 1; i < pos; i++)
+        {
+          dclltemp = dclltemp->dcllnext;
+        }
+
+        if (dclltemp == dcllrear)
+        {
+          printf("Removed Element:%d\n", dcllrear->dclldata);
+          dcllrear = dcllrear->dcllprev;
+          free(dcllrear->dcllnext);
+          dcllrear->dcllnext = dcllfront;
+          dcllCtr--;
+        }
+        else
+        {
+          printf("Removed Element:%d\n", dclltemp->dclldata);
+          dclltemp->dcllprev->dcllnext = dclltemp->dcllnext;
+          dclltemp->dcllnext->dcllprev = dclltemp->dcllprev;
+          free(dclltemp);
+          dcllCtr--;
+        }
+      }
+    }
+    else if (choice == 4)
+    {
+
+      printf("Enter the data:");
+      scanf("%d", &data);
+      dclltemp = dcllfront;
+      while (dclltemp != NULL)
+      {
+        // if only one node
+        if (dcllfront->dcllnext == dcllfront)
+        {
+          if (dcllfront->dclldata == data)
+          {
+            printf("%d deleted\n", dcllfront->dclldata);
+            free(dcllfront);
+            dcllfront = NULL;
+            dcllrear = NULL;       
+            dcllCtr--;   
+          }
+          else
+          {
+            printf("%d not found\n", data);
+          }
+          break;
+        }
+
+        // data is at first node
+        if (dcllfront->dclldata == data)
+        {
+          printf("%d deleted\n", dcllfront->dclldata);
+          dcllfront = dcllfront->dcllnext;
+          free(dcllfront->dcllprev);
+          dcllfront->dcllprev = dcllrear;
+          dcllrear->dcllnext = dcllfront;
+          dcllCtr--;
+          break;
+        }
+
+        // data is at last node
+        if (dcllrear->dclldata == data)
+        {
+          printf("%d deleted\n", dcllrear->dclldata);
+          dcllrear = dcllrear->dcllprev;
+          free(dcllrear->dcllnext);
+          dcllrear->dcllnext = dcllfront;
+          dcllfront->dcllprev = dcllrear;
+          dcllCtr--;
+          break;
+        }
+
+        // data is at middle position
+        if (dclltemp->dclldata == data)
+        {
+          printf("%d deleted\n", dclltemp->dclldata);
+          dclltemp->dcllprev->dcllnext = dclltemp->dcllnext;
+          dclltemp->dcllnext->dcllprev = dclltemp->dcllprev;
+          free(dclltemp);
+          dcllCtr--;
+          break;
+        }
+        dclltemp = dclltemp->dcllnext;
+      }
+    }
+
+    else if (choice == 5)
+    {
+      printf("\nExited\n");
+    }
+    else
+    {
+      printf("Invalid Choice\n");
+    }
+  }
+}
+
+void dclldisplay()
+{
+  int choice;
+
+  if (dcllfront == NULL)
+  {
+    printf("No elements in linked list!!!\n");
+  }
+  else
+  {
+    dclltemp = dcllfront;
+    do
+    {
+      printf("\n");
+      printf("%d\n", dclltemp->dclldata);
+      dclltemp = dclltemp->dcllnext;
+    } while (dclltemp != dcllfront);
   }
 }

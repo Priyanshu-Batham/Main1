@@ -6,7 +6,7 @@ int strToNum(char num[]);
 
 int main(){
     int i,NUM1,NUM2;
-    int ctr=0;
+    int ctr=0,ctr2=0;
     char exp[10],num1[5],num2[5],opr;
 
     cout<<"Enter an Expression:";

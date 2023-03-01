@@ -1,18 +1,19 @@
-#include <iostream.h>
+#include <iostream>
 #include <stdlib.h>
 #include <stdio.h>
-//using namespace std;
+using namespace std;
 
 void duplicate(char lineA[], char lineB[]);
 char unique1[150];
 char unique2[150];
 
 int main()
-{
+{   
     int i,j, ctr = 0,choice, flag = 0;
     char line1[50], line2[50], line3[300];
     char newLine[300];
     char a;
+    
     system("cls");
     cout << "Enter string one:";
     gets(line1);

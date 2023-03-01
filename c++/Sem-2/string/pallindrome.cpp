@@ -22,6 +22,9 @@ int main(){
     word[j] = '\0';
     puts(word);
 
+    // a = isPallindrome(word,ctr);
+    // cout<<a;
+
     if(isPallindrome(word,ctr)){
         cout<<"It is pallindrome";
     }
