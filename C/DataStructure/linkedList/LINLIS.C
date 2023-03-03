@@ -68,6 +68,25 @@ void dcllins();
 void dclldel();
 void dclldisplay();
 
+// application linked list declarations------------------------------------------->>>>>>>>>>>>>>>>>>>>>>>>>
+struct allnode
+{
+  int coeff;
+  char var;
+  int exponent;
+  struct allnode *allnext;
+};
+struct allnode *allnewnode;
+struct allnode *allfront1 = NULL;
+struct allnode *allfront2 = NULL;
+struct allnode *allrear1 = NULL;
+struct allnode *allrear2 = NULL;
+struct allnode *alltemp1 = NULL;
+struct allnode *alltemp2 = NULL;
+
+void allins();
+void alldisplay();
+
 // ------------------------------------------------------------------------>>>>>>>>>>>>>
 int main()
 {
@@ -76,6 +95,7 @@ int main()
   int circularllchoice;
   int doublychoice; // because circular doesn't have dynamic so no need for circularstatichcoice
   int doublycircularchoice;
+  int applicationChoice;
   // clrscr();
   do
   {
@@ -85,7 +105,8 @@ int main()
     printf("2:Circular Linked List\n");
     printf("3:Doubly Linked List\n");
     printf("4:Circular Doubly Linked List\n");
-    printf("5:Exit\n");
+    printf("5:Application\n");
+    printf("6:Exit\n");
     printf("Choice:");
     scanf("%d", &typeofll);
     switch (typeofll)
@@ -220,13 +241,36 @@ int main()
 
     // exit
     case 5:
+      do
+      {
+        printf("\nWhich Operation to perform?\n");
+        printf("1:Insert Element\n");
+        printf("2:Display Element\n");
+        printf("3:Exit\n");
+        printf("Choice:");
+        scanf("%d", &applicationChoice);
+        switch (applicationChoice)
+        {
+        case 1:
+          allins();
+          break;
+        case 2:
+          alldisplay();
+          break;
+        case 3:
+          break;
+
+        default:
+          printf("Invalid Choice\n");
+        }
+      } while (applicationChoice != 3);
       break;
 
     default:
       printf("Invalid Choice\n");
       break;
     }
-  } while (typeofll != 5);
+  } while (typeofll != 6);
 
   return 0;
 }
@@ -1218,9 +1262,9 @@ void dclldel()
         printf("No element on position %d\n", pos);
       }
       else if (pos == 1)
-      {                          // algo to delete element from front:
+      {                            // algo to delete element from front:
         if (dcllfront == dcllrear) // if there is only one element in the linked list
-        {                        // and pos1 element is to be deleted
+        {                          // and pos1 element is to be deleted
           printf("Removed Element:%d\n", dcllfront->dclldata);
           free(dcllfront);
           dcllfront = NULL;
@@ -1280,8 +1324,8 @@ void dclldel()
             printf("%d deleted\n", dcllfront->dclldata);
             free(dcllfront);
             dcllfront = NULL;
-            dcllrear = NULL;       
-            dcllCtr--;   
+            dcllrear = NULL;
+            dcllCtr--;
           }
           else
           {
@@ -1356,5 +1400,114 @@ void dclldisplay()
       printf("%d\n", dclltemp->dclldata);
       dclltemp = dclltemp->dcllnext;
     } while (dclltemp != dcllfront);
+  }
+}
+
+void allins()
+{
+  int i, j;
+  char exp1Choice, exp2Choice;
+
+  // for expression 1
+  printf("Enter Expression 1:\n");
+  do
+  {
+    allnewnode = (struct allnode *)malloc(sizeof(struct allnode));
+    allnewnode->allnext = NULL;
+    printf("Element:");
+    scanf(" %d%c%d", &allnewnode->coeff, &allnewnode->var, &allnewnode->exponent);
+
+    // when no node
+    if (allfront1 == NULL)
+    {
+      allfront1 = allnewnode;
+      allrear1 = allnewnode;
+    }
+    // when some nodes
+    else
+    {
+      allrear1->allnext = allnewnode;
+      allrear1 = allnewnode;
+    }
+    printf("\nwhat to add more? (y/n):");
+    scanf(" %c", &exp1Choice);
+
+  } while (exp1Choice == 'y' || exp1Choice == 'Y');
+
+  // for expression 2
+  printf("Enter Expression 2:\n");
+  do
+  {
+    allnewnode = (struct allnode *)malloc(sizeof(struct allnode));
+    allnewnode->allnext = NULL;
+    printf("Element:");
+    scanf(" %d%c%d", &allnewnode->coeff, &allnewnode->var, &allnewnode->exponent);
+
+    // when no node
+    if (allfront2 == NULL)
+    {
+      allfront2 = allnewnode;
+      allrear2 = allnewnode;
+    }
+    // when some nodes
+    else
+    {
+      allrear2->allnext = allnewnode;
+      allrear2 = allnewnode;
+    }
+    printf("\nwhat to add more? (y/n):");
+    scanf(" %c", &exp2Choice);
+
+  } while (exp2Choice == 'y' || exp2Choice == 'Y');
+}
+
+void alldisplay()
+{
+  int sum;
+  alltemp1 = allfront1;
+  alltemp2 = allfront2;
+  if (alltemp1 == NULL)
+  {
+    printf("NO expressions to ADD :(\n");
+  }
+  else
+  {
+    do
+    {
+      if (alltemp1->exponent == alltemp2->exponent)
+      {
+        sum = alltemp1->coeff + alltemp2->coeff;
+        printf("%d%c%d ", sum, alltemp1->var, alltemp1->exponent);
+        alltemp1 = alltemp1->allnext;
+        alltemp2 = alltemp2->allnext;
+      }
+      else if (alltemp1->exponent > alltemp2->exponent)
+      {
+        printf("%d%c%d ", alltemp1->coeff, alltemp1->var, alltemp1->exponent);
+        alltemp1 = alltemp1->allnext;
+      }
+      else if (alltemp1->exponent < alltemp2->exponent)
+      {
+        printf("%d%c%d ", alltemp2->coeff, alltemp2->var, alltemp2->exponent);
+        alltemp2 = alltemp2->allnext;
+      }
+    } while (alltemp1 != NULL && alltemp2 != NULL);
+
+     if (alltemp1 == NULL && alltemp2 != NULL)
+    {
+      while (alltemp2 != NULL)
+      {
+        printf("%d%c%d ", alltemp2->coeff, alltemp2->var, alltemp2->exponent);
+        alltemp2 = alltemp2->allnext;
+      }
+    }
+    else if(alltemp1 != NULL && alltemp2 == NULL)
+    {
+      while (alltemp1 != NULL)
+      {
+        printf("%d%c%d ", alltemp1->coeff, alltemp1->var, alltemp1->exponent);
+        alltemp1 = alltemp1->allnext;
+      }
+    }
   }
 }
