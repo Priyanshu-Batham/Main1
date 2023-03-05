@@ -433,7 +433,21 @@ void sort()
         // Bubble sorting----------------------->>>>>>>>>>>>
         if (choice == 1)
         {
-            printf("\nUnder Maintainence\n");
+            for (i = front; i->next != NULL; i = i->next)
+            {
+                j = front;
+                while (j->next != NULL)
+                {
+                    if (j->data > j->next->data)
+                    {
+                        key = j->data;
+                        j->data = j->next->data;
+                        j->next->data = key;
+                    }
+                    j = j->next;
+                }
+            }
+            display();
         }
 
         // insertion sorting----------------------------->>>>>>
@@ -465,7 +479,25 @@ void sort()
         // Selection sorting----------------------->>>>>>>>>>>>
         else if (choice == 3)
         {
-            printf("\nUnder Maintainence\n");
+            i = front;
+            j = i->next;
+
+            while (i->next != NULL)
+            {
+                while (j != NULL)
+                {
+                    if (i->data > j->data)
+                    {
+                        key = i->data;
+                        i->data = j->data;
+                        j->data = key;
+                    }
+                    j = j->next;
+                }
+                i = i->next;
+                j = i->next;
+            }
+            display();
         }
         else
         {
