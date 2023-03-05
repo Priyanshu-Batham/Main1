@@ -35,6 +35,8 @@
   ],
   "C_Cpp_Runner.useAddressSanitizer": false,
   "files.associations": {
-    "linLisExp.C": "cpp"
+    "linLisExp.C": "cpp",
+    "LINLIS.C": "cpp",
+    "llsup.C": "cpp"
   }
 }
