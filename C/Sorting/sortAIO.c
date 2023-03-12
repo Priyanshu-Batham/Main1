@@ -8,10 +8,16 @@ void ssort(int *arr, int size);
 void qsort(int *arr, int size);
 void printer(int *arr, int size);
 
+void lsearch(int *arr, int size);
+void bsearch(int *arr, int size);
+
 int main()
 {
-    int array[SIZE] = {4,2,5,3,1};
+    int array[SIZE] = {4, 2, 5, 3, 1};
     int opChoice, searchChoice, sortChoice;
+    printf("\n");
+    printer(array,SIZE);
+    printf("\n");
     do
     {
         printf("\nWhich Operation to perform?\n");
@@ -34,11 +40,11 @@ int main()
                 switch (searchChoice)
                 {
                 case 1:
-                    printf("\nUnder Maintanence\n");
+                    lsearch(array, SIZE);
                     break;
 
                 case 2:
-                    printf("\nUnder Maintanence\n");
+                    bsearch(array, SIZE);
                     break;
 
                 case 3:
@@ -105,7 +111,6 @@ int main()
     return 0;
 }
 
-
 // ------------------------------------------ INSERTION SORT ---------------------------------------->
 void isort(int *arr, int size)
 {
@@ -161,6 +166,73 @@ void bsort(int *arr, int size)
         }
     }
 }
+
+// ------------------------------------------ LINEAR SEARCH---------------------------------------->
+void lsearch(int *arr, int size)
+{
+    int i, data;
+    printf("Enter the Number:");
+    scanf("%d", &data);
+
+    for (i = 0; i < size; i++)
+    {
+        if (arr[i] == data)
+        {
+            printf("\n%d is found at %d position\n", data, i + 1);
+            break;
+        }
+    }
+    if (i == size)
+    {
+        printf("\n%d not found\n", data);
+    }
+}
+
+// ------------------------------------------ BINARY SEARCH---------------------------------------->
+void bsearch(int *arr, int size){
+    int first, last, mid;
+    int i, j, data, flag = 0;
+    printf("Enter the Number:");
+    scanf("%d", &data);
+
+    bsort(arr,size);
+    printer(arr,size);
+
+    first = 0;
+    last = size-1;
+    while(first <= last){
+        mid = (first+last)/2;
+        if(arr[mid] == data){
+            printf("\n%d found at %d position\n", data, mid+1);
+            flag = 1;
+            break;
+        }
+        else if(arr[mid] > data){
+            last = mid-1;
+        }
+        else{
+            first = mid+1;
+        }
+    }
+    if(flag == 0){
+        printf("\n%d not found\n",data);
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // ------------------------------------------ PRINTER ---------------------------------------->
 void printer(int *arr, int size)
 {
