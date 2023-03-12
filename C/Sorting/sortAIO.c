@@ -93,6 +93,7 @@ int main()
                     break;
 
                 case 4:
+                    printf("\nUnder Maintenance\n");
                     break;
 
                 default:
@@ -218,20 +219,6 @@ void bsearch(int *arr, int size){
         printf("\n%d not found\n",data);
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // ------------------------------------------ PRINTER ---------------------------------------->
 void printer(int *arr, int size)
