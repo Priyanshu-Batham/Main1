@@ -5,7 +5,10 @@
 void bsort(int *arr, int size);
 void isort(int *arr, int size);
 void ssort(int *arr, int size);
-void qsort(int *arr, int size);
+
+void qsort(int *arr, int low, int high);
+int partition(int arr[], int low, int high);
+
 void printer(int *arr, int size);
 
 void lsearch(int *arr, int size);
@@ -16,7 +19,7 @@ int main()
     int array[SIZE] = {4, 2, 5, 3, 1};
     int opChoice, searchChoice, sortChoice;
     printf("\n");
-    printer(array,SIZE);
+    printer(array, SIZE);
     printf("\n");
     do
     {
@@ -63,7 +66,8 @@ int main()
                 printf("1:Insertion Sort\n");
                 printf("2:Selection Sort\n");
                 printf("3:Bubble Sort\n");
-                printf("4:Exit\n");
+                printf("4:Quick Sort\n");
+                printf("5:Exit\n");
                 printf("Choice:");
                 scanf("%d", &sortChoice);
                 switch (sortChoice)
@@ -93,14 +97,21 @@ int main()
                     break;
 
                 case 4:
-                    printf("\nUnder Maintenance\n");
+                    printf("\nUnsorted:");
+                    printer(array, SIZE);
+                    qsort(array, 0, SIZE - 1);
+                    printf("\nSorted:\t");
+                    printer(array, SIZE);
+                    break;
+
+                case 5:
                     break;
 
                 default:
                     printf("\nInvalid Choice\n");
                 }
 
-            } while (sortChoice != 4);
+            } while (sortChoice != 5);
             break;
 
         case 3:
@@ -168,6 +179,49 @@ void bsort(int *arr, int size)
     }
 }
 
+// ------------------------------------------ QUICK SORT ---------------------------------------->
+void qsort(int *arr, int low, int high)
+{
+    int sortedElem;
+
+    if (low < high)
+    {
+        sortedElem = partition(arr, low, high);
+        qsort(arr, low, sortedElem - 1);
+        qsort(arr, sortedElem + 1, high);
+    }
+}
+
+int partition(int arr[], int low, int high)
+{
+    int num = arr[low];
+    int i = low + 1, j = high, temp;
+
+    do
+    {
+        while (arr[i] <= num)
+        {
+            i++;
+        }
+        while (arr[j] > num)
+        {
+            j--;
+        }
+
+        if (i < j)
+        {
+            temp = arr[i];
+            arr[i] = arr[j];
+            arr[j] = temp;
+        }
+    } while (i < j);
+    temp = arr[low];
+    arr[low] = arr[j];
+    arr[j] = temp;
+
+    return j;
+}
+
 // ------------------------------------------ LINEAR SEARCH---------------------------------------->
 void lsearch(int *arr, int size)
 {
@@ -190,33 +244,39 @@ void lsearch(int *arr, int size)
 }
 
 // ------------------------------------------ BINARY SEARCH---------------------------------------->
-void bsearch(int *arr, int size){
+void bsearch(int *arr, int size)
+{
     int first, last, mid;
     int i, j, data, flag = 0;
     printf("Enter the Number:");
     scanf("%d", &data);
 
-    bsort(arr,size);
-    printer(arr,size);
+    bsort(arr, size);
+    printer(arr, size);
 
     first = 0;
-    last = size-1;
-    while(first <= last){
-        mid = (first+last)/2;
-        if(arr[mid] == data){
-            printf("\n%d found at %d position\n", data, mid+1);
+    last = size - 1;
+    while (first <= last)
+    {
+        mid = (first + last) / 2;
+        if (arr[mid] == data)
+        {
+            printf("\n%d found at %d position\n", data, mid + 1);
             flag = 1;
             break;
         }
-        else if(arr[mid] > data){
-            last = mid-1;
+        else if (arr[mid] > data)
+        {
+            last = mid - 1;
         }
-        else{
-            first = mid+1;
+        else
+        {
+            first = mid + 1;
         }
     }
-    if(flag == 0){
-        printf("\n%d not found\n",data);
+    if (flag == 0)
+    {
+        printf("\n%d not found\n", data);
     }
 }
 
