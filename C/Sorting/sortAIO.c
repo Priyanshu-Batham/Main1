@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include<math.h>
 #include <conio.h>
 #define SIZE 5
 
@@ -8,6 +9,8 @@ void ssort(int *arr, int size);
 
 void qsort(int *arr, int low, int high);
 int partition(int arr[], int low, int high);
+
+void bktsort(int arr[], int size);
 
 void printer(int *arr, int size);
 
@@ -67,7 +70,8 @@ int main()
                 printf("2:Selection Sort\n");
                 printf("3:Bubble Sort\n");
                 printf("4:Quick Sort\n");
-                printf("5:Exit\n");
+                printf("5:Bucket Sort\n");
+                printf("6:Exit\n");
                 printf("Choice:");
                 scanf("%d", &sortChoice);
                 switch (sortChoice)
@@ -105,13 +109,21 @@ int main()
                     break;
 
                 case 5:
+                    printf("\nUnsorted:");
+                    printer(array, SIZE);
+                    bktsort(array, SIZE);
+                    printf("\nSorted:\t");
+                    printer(array, SIZE);
+                    break;
+
+                case 6:
                     break;
 
                 default:
                     printf("\nInvalid Choice\n");
                 }
 
-            } while (sortChoice != 5);
+            } while (sortChoice != 6);
             break;
 
         case 3:
@@ -220,6 +232,80 @@ int partition(int arr[], int low, int high)
     arr[j] = temp;
 
     return j;
+}
+
+// --------------------------BUCKETSORT---------------------------->>>
+void bktsort(int arr[], int size)
+{
+    int bucket[10][10];
+    int num, mod1, mod2, row, column;
+    int mainLoop, max = 0, maxItr = 0;
+    int i, j;
+    
+    for(i = 0; i <= size; i++){
+        if(arr[i] > max){
+            max = arr[i];
+        }
+    }
+
+    while(max > 0){
+        max = max /10;
+        maxItr++;
+    }
+
+    // the main sorting loop should be iterated upto length of each number
+    for (mainLoop = 1; mainLoop <= maxItr; mainLoop++)
+    {
+
+        // filling the bucket with -1
+        for (i = 0; i < 10; i++)
+        {
+            for (j = 0; j < 10; j++)
+            {
+                bucket[i][j] = -1;
+            }
+        }
+
+        // traversing through the array to fetch and process data
+        for (i = 0; i < size; i++)
+        {
+            mod1 = pow(10, mainLoop);
+            mod2 = pow(10, mainLoop - 1);
+            row = (arr[i] % mod1) / mod2;
+
+            column = 0;
+            while (bucket[row][column] != -1)
+            {
+                column++;
+            }
+
+            bucket[row][column] = arr[i];
+        }
+
+        // filling the actual array with sorted stuff
+        num = 0;
+        for(i = 0; i <= 9; i++){
+            for(j = 0; j <= 9; j++){
+                if(bucket[i][j] != -1){
+                    arr[num] = bucket[i][j];
+                    num++;
+                }
+            }
+        }
+
+
+        // enable this to see the contents of bucket after every iteration
+        // printf("-------------------------------\n");
+        // for (i = 0; i < 10; i++)
+        // {
+        //     for (j = 0; j < 10; j++)
+        //     {
+        //         printf("%d ", bucket[j][i]);
+        //     }
+        //     printf("\n");
+        // }
+        // printf("-------------------------------\n");
+    }
 }
 
 // ------------------------------------------ LINEAR SEARCH---------------------------------------->
