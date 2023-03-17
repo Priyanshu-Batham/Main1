@@ -1,14 +1,13 @@
 #include <iostream>
 #include <conio.h>
 #include <stdlib.h>
-#include <unistd.h>
 #include <time.h>
 
 using namespace std;
 
 int main()
-{   
-    srand( time( NULL ) );
+{
+    srand(time(NULL));
     int l[10], o, i = 0, choice = 0, t1, t2, t;
     for (i = 0; i < 10; i++)
     {
@@ -40,6 +39,5 @@ int main()
         }
         i++;
     } while (choice == 1);
-    // getch();
     return 0;
 }

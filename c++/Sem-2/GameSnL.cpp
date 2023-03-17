@@ -1,3 +1,4 @@
+
 #include <iostream>
 #include <stdlib.h>
 #include <stdio.h>
@@ -19,7 +20,7 @@ int main()
   clrscr();
   srand(time(NULL));
   draw_line(50, '=');
-  cout << "\n\n\n\n\t\tSNAKE LADDER GAME\n\n\n\n";
+  cout << "\n\n\n\nPRIYANSHU'S SNAKE LADDER GAME\n\n\n\n";
   draw_line(50, '=');
   cout << "\n\n\nEnter Name of player 1 :";
   scanf("%s", &player1name);
@@ -122,23 +123,14 @@ void play_dice(int &score)
   case 92:
     score = 51;
     break;
-  case 83:
-    score = 19;
-    break;
   case 73:
     score = 1;
-    break;
-  case 69:
-    score = 33;
     break;
   case 64:
     score = 36;
     break;
   case 59:
     score = 17;
-    break;
-  case 55:
-    score = 7;
     break;
   case 52:
     score = 11;
@@ -149,16 +141,13 @@ void play_dice(int &score)
   case 46:
     score = 5;
     break;
-  case 44:
-    score = 22;
-    break;
+    
   case 8:
     score = 26;
     break;
   case 21:
     score = 82;
     break;
-
   case 43:
     score = 77;
     break;
@@ -177,4 +166,5 @@ void play_dice(int &score)
   case 80:
     score = 100;
   }
+  // cin.get();
 }
