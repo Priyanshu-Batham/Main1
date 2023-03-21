@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": true,
-      "cwd": "d:/1_GITHUB/Me/Main/c++/POTD",
-      "program": "d:/1_GITHUB/Me/Main/c++/POTD/build/Debug/outDebug",
+      "cwd": "d:/1_GITHUB/Me/Main/C++/POTD",
+      "program": "d:/1_GITHUB/Me/Main/C++/POTD/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [
