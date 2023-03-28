@@ -23,20 +23,12 @@ struct node *createNode(int val)
 // utility function to check the no of terminal nodes of a tree
 int noOfNodes(struct node *root, int count)
 {
-    if (root->left == NULL && root->right == NULL)
-    {
-        count++;
-    }
+    if(root == NULL) return count;
+    else if (root->left == NULL && root->right == NULL) count++;
     else
     {
-        if (root->left != NULL)
-        {
-            count = noOfNodes(root->left, count);
-        }
-        if (root->right != NULL)
-        {
-            count = noOfNodes(root->right, count);
-        }
+        if (root->left != NULL) count = noOfNodes(root->left, count);
+        if (root->right != NULL) count = noOfNodes(root->right, count);
     }
     return count;
 }
@@ -47,19 +39,14 @@ struct node *insertNode(struct node *root, int val)
     int leftNodes = 0;
     int rightNodes = 0;
 
-    if (root == NULL)
-    {
-        root = createNode(val);
-    }
+    if (root == NULL)root = createNode(val);
     else
     {
         leftNodes = noOfNodes(root->left, 0);
         rightNodes = noOfNodes(root->right, 0);
 
-        if (leftNodes >= rightNodes)
-            root->left = insertNode(root->left, val);
-        else
-            root->right = insertNode(root->right, val);
+        if (leftNodes <= rightNodes) root->left = insertNode(root->left, val);
+        else root->right = insertNode(root->right, val);
     }
     return root;
 }
@@ -84,8 +71,9 @@ int main()
     root = insertNode(root, 30);
     root = insertNode(root, 40);
     root = insertNode(root, 50);
-    printf("%d",count);
+    root = insertNode(root, 60);
     count = noOfNodes(root,count);
+    printf("%d",count);
 
     // printf("hello");
 

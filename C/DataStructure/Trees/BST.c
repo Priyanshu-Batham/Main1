@@ -68,17 +68,27 @@ void display(struct node *root, int choice)
     }
 }
 
+// ----------------SEARCH-------------->>>
+struct node *search(struct node *root, int val){
+    if(root != NULL){
+        if(root->data > val) root = search(root->left,val);
+        else if(root->data < val) root = search(root->right,val);
+    }
+    return root;
+}
+
 // ----------------MAIN FUNCTION-------------->>>
 int main()
 {
-    int choice, val,displayChoice;
+    int choice, val,displayChoice,target;
     do
     {
         printf("\n");
         printf("Which Operation to perform?\n");
         printf("1:Insert\n");
         printf("2:Display\n");
-        printf("3:Exit\n");
+        printf("3:Search\n");
+        printf("4:Exit\n");
         printf("Choice:");
         scanf("%d", &choice);
         printf("\n");
@@ -88,14 +98,8 @@ int main()
         case 1:
             printf("Enter the data:");
             scanf("%d", &val);
-            if (root == NULL)
-            {
-                root = createNode(val);
-            }
-            else
-            {
-                root = insertNode(root, val);
-            }
+            if (root == NULL) root = createNode(val);
+            else root = insertNode(root, val);
             break;
 
         case 2:
@@ -110,8 +114,14 @@ int main()
             break;
 
         case 3:
+            printf("\nEnter the number to search:\n");
+            scanf("%d",&target);
+            struct node *location = NULL;
+            location = search(root,target);
+            if(location == NULL) printf("\n%d not found\n", target);
+            else printf("\n%d found at memory address: %d\n",target,location);
             break;
         }
-    } while (choice != 3);
+    } while (choice != 4);
     return 0;
 }
