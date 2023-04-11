@@ -93,7 +93,7 @@ struct node *minSearch(struct node *root){
 
 
 
-// ----------------SEARCH-------------->>>
+//----------------DELETE-------------->>>
 struct node *delete(struct node *root, int val)
 {
 
