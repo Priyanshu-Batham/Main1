@@ -93,7 +93,11 @@ struct node *minSearch(struct node *root){
 
 
 
+<<<<<<< HEAD
+// ----------------DELETE-------------->>>
+=======
 //----------------DELETE-------------->>>
+>>>>>>> 1b6ffbd078474df3da102abec30261271c2c1dd0
 struct node *delete(struct node *root, int val)
 {
 
@@ -104,7 +108,7 @@ struct node *delete(struct node *root, int val)
     }
     else if (val < root->data)
         root->left = delete (root->left, val);
-    else if (val > root->data)
+    else if (val > root->data)  
         root->right = delete (root->right, val);
     // if the target node is found
     else
