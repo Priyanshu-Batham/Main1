@@ -1,7 +1,5 @@
 string = input("Enter a string: ")
-
-if string[0].islower():
-    string = string[0].capitalize() + string[1:]
+string = " "+string
 
 for i in range(1, len(string)):
     if string[i - 1] == " ":
