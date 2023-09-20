@@ -1,6 +1,7 @@
 #<------------declaring all dataStructures and utilities----------->
-sortedAtNo = []
+#periodic table of size 5*9
 perTab = []
+sortedAtNo = []
 propDict = {
     1: "Metals",
     2: "Metalloids",
@@ -11,9 +12,17 @@ propDict = {
 while(True):
     #<------------------------------take inputs from the user---------------------------->
     sym = input("Enter the symbol name: ")
-    atno = int(input("Enter the atomic number: "))
-    row = int(input("Enter the row number: "))
-    col = int(input("Enter the col number: "))
+    while(True):
+        atno = int(input("Enter the atomic number: "))
+        if(atno <46):
+            break
+        print("Atomicity should be less than 46")
+
+    row = (atno//10)+1
+    col = (atno%10)
+    if(row>1):
+        col+=1
+    
     print('''
 Enter the property of the element:
 1: Metal
@@ -27,7 +36,7 @@ Enter the property of the element:
     #<--------------if the element is already present then we won't add it------------------>
     isAlreadyPresent = False
     for i in perTab:
-        if(i[0] == sym or i[1] == atno or (i[2]==row and i[3] == col)):
+        if(i[0] == sym or i[1] == atno):
             isAlreadyPresent = True
 
     if(isAlreadyPresent == True):
