@@ -1,0 +1,70 @@
+#include <stdio.h>
+
+struct stack{
+  int no;
+  struct stack *next;
+} *top = NULL;
+typedef struct stack st;
+void push();
+int pop();
+void display();
+
+int main()
+{
+ char ch;
+ int choice, item;
+ do{
+   clrscr();
+   printf("\n1:PUSH");
+   printf("\n2:POP");
+   printf("\n3:DISPLAY");
+   printf("\n4:EXIT");
+   printf("\n Enter your choice");
+   scanf("%d",&choice);
+   switch(choice){
+     case 1: push();
+	     break;
+     case 2: pop();
+	     break;
+     case 3: display();
+	     break;
+     case 4: exit(0);
+   }
+ getch();
+ }
+ while(choice != 4);
+}
+
+void push(){
+  st *p;
+  p=(st*)malloc(sizeof(st));
+  printf("\n Enter the number:");
+  scanf("%d",&p->no);
+  p->next=top;
+  top=p;
+}
+
+int pop()
+{
+  st *p;
+  if(top==NULL){
+    printf("Stack is already empty");
+  }
+  else{
+    top=top->next;
+    //free(p);
+    return(p->no);
+  }
+}
+
+void display()
+{
+  st *p;
+  p=top;
+  while(p!=NULL)
+  {
+    printf("\nno=%d",p->no);
+    p=p->next;
+  }
+  printf("\nno=%d",p->no);
+}

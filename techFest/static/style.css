@@ -1,0 +1,208 @@
+/* Common */
+@import url("https://fonts.googleapis.com/css?family=Lato");
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+}
+* {
+  position: relative;
+  box-sizing: border-box;
+  font-family: 'Lato', sans-serif;
+  outline: none;
+}
+body {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  background: #d1db82;
+  font-family: 'Lato', sans-serif;
+}
+/* Form opened styles */
+.form.active {
+  padding: 24px;
+  background: #6c4a27;
+  border: 6px solid #cb9a4b;
+  box-shadow: 0px 30px 20px -20px rgba(0,0,0,0.3);
+  overflow: hidden;
+  width: 320px;
+  height: 380px;
+  -webkit-animation: openForm 1.4s;
+  -webkit-animation-timing-function: cubic-bezier(0.9, 0.1, 0.1, 0.9);
+  animation: openForm 1.4s;
+  animation-timing-function: cubic-bezier(0.9, 0.1, 0.1, 0.9);
+}
+.form.active * {
+  top: 0;
+  opacity: 1;
+}
+.form.active::after,
+.form.active::before {
+  opacity: 0;
+}
+.submit {
+  top: 0;
+  opacity: 1;
+  width: 160px;
+  padding: 8px;
+  text-align: center;
+  margin: 24px auto 0 auto;
+  background: #d1db82;
+  cursor: pointer;
+  text-transform: uppercase;
+  color: #3e451b;
+  box-shadow: 0px 6px 10px -4px rgba(0,0,0,0.3), 0px 1px 0px rgba(255,255,255,0.5) inset, 0px 0px 0px rgba(0,0,0,0.5) inset;
+  transition: all 1.1s 1s ease;
+}
+input,
+textarea {
+  top: 0;
+  display: block;
+  width: 100%;
+  border: none;
+  padding: 10px;
+  background: #fefefe;
+  margin: 12px 0 0 0;
+  font-style: italic;
+  border: 2px solid #bbb;
+}
+input {
+  top: 0;
+}
+input:nth-child(1) {
+  transition: all 0.5s 1s ease;
+}
+input:nth-child(2) {
+  transition: all 0.7s 1s ease;
+}
+textarea {
+  top: 0;
+  opacity: 1;
+  max-height: 100px;
+  transition: all 0.9s 1s ease;
+}
+h1 {
+  top: 0;
+  opacity: 1;
+  text-align: center;
+  font-size: 24px;
+  text-transform: uppercase;
+  color: #cb9a4b;
+  margin-bottom: 32px;
+  transition: all 0.3s 1s ease;
+}
+/* Form closed styles */
+.form {
+  width: 64px;
+  height: 64px;
+  background: #6c4a27;
+  border: 6px solid #cb9a4b;
+  box-shadow: 0px 10px 20px -5px rgba(0,0,0,0.3);
+  cursor: pointer;
+  overflow: hidden;
+}
+.form * {
+  top: -12px;
+  opacity: 0;
+}
+.form::before,
+.form::after {
+  content: '';
+  display: inline-block;
+  position: absolute;
+  width: 0px;
+  height: 0px;
+  opacity: 1;
+  left: 10px;
+  z-index: 100;
+  transition: all 0.1s linear;
+  transform: scale(0.9999, 0.9999);
+}
+.form::before {
+  top: 15px;
+  transform: perspective(1000) rotateX(0deg);
+  transform-origin: 50% 0;
+  border-top: 11px solid #fff;
+  border-right: 16px solid transparent;
+  border-bottom: 11px solid transparent;
+  border-left: 16px solid transparent;
+}
+.form::after {
+  top: 17px;
+  border-top: 11px solid transparent;
+  border-right: 16px solid #fff;
+  border-bottom: 11px solid #fff;
+  border-left: 16px solid #fff;
+}
+.form:hover::before {
+  transform: perspective(1000) rotateX(180deg);
+  transform-origin: 50% 0;
+}
+/* ok mes */
+.ok_message {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin-left: -32px;
+  margin-top: -32px;
+  width: 64px;
+  height: 64px;
+  background: #6c4a27;
+  z-index: 100;
+  transform: scale(0, 0) rotate(-90deg);
+  transition: all 0.5s 0.3s cubic-bezier(0.9, 0.1, 0.1, 0.9);
+  line-height: 64px;
+  text-align: center;
+  cursor: pointer;
+}
+.ok_message span {
+  text-transform: uppercase;
+  font-size: 16px;
+  color: #cb9a4b;
+  opacity: 0;
+  transform: scale(0.2, 0.2);
+  transition: all 0.6s 0.4s ease;
+}
+.ok_message.active {
+  width: 320px;
+  margin-left: -160px;
+  transform: scale(1, 1) rotate(0deg);
+}
+.ok_message.active span {
+  opacity: 1;
+  transform: scale(1, 1);
+  left: 0px;
+}
+@-webkit-keyframes openForm {
+  0% {
+    width: 64px;
+    height: 64px;
+  }
+  50% {
+    width: 320px;
+    height: 64px;
+  }
+  100% {
+    width: 320px;
+    height: 380px;
+  }
+}
+@keyframes openForm {
+  0% {
+    width: 64px;
+    height: 64px;
+  }
+  50% {
+    width: 320px;
+    height: 64px;
+  }
+  100% {
+    width: 320px;
+    height: 380px;
+  }
+}

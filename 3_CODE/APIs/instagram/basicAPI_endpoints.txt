@@ -1,0 +1,7 @@
+/me - Gets the authenticated user's profile
+/me/media - Gets the authenticated user's media objects
+/{user-id} - Gets a user's profile
+/{user-id}/media - Gets a user's media objects
+/{media-id} - Gets a media object
+/{media-id}/comments - Gets comments on a media object
+/{media-id}/likes - Gets users who have liked a media object
