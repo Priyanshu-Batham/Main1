@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import messagebox
 from database import *
+from machineLearning import *
 
 #--------------------------UTILITY FUNCTIONS------------------------>>>>>>>>
 #LOGIN FUNCTION
@@ -9,7 +10,7 @@ def loginBtn():
     password = password_entry.get()
 
     if isUserPresent(username, password): #returns true or false
-        home_label.config(text=f"Welcome {username}")
+        welcome_label.config(text=f"Welcome {username}")
 
         login_frame.pack_forget() 
         home_frame.pack()        
@@ -21,9 +22,14 @@ def registerBtn():
     register_frame.pack()
 
 def signUpBtn():
-    createAccount(register_username_entry, register_password_entry, register_mobile_entry, register_email_entry)
-    username_entry = register_username_entry
-    home_label.config(text=f"Welcome {username_entry}")
+    username = register_username_entry.get()
+    password = register_password_entry.get()
+    mobile = register_mobile_entry.get()
+    email = register_email_entry.get()
+
+    createAccount(username, password, mobile, email)
+
+    welcome_label.config(text=f"Welcome {username}")
 
     register_frame.pack_forget()
     home_frame.pack()
@@ -52,9 +58,14 @@ def changeBtn():
     newPassword = change_password_entry.get()
     changePassword(username, newPassword)
 
-    home_label.config(text=f"Welcome {username}")
+    welcome_label.config(text=f"Welcome {username}")
     change_frame.pack_forget()
     home_frame.pack()
+
+#PREDICT AND UPDATE THE OUTPUT TEXT
+def predictBtn():
+    response = predict()
+    output_label.config(text=f"Tomorrow's temperature for Day{response[0]} is  {response[1]} \u00b0C")
 
 # ---------------------------------FRAMES--------------------------------->>>>>>>>>
 # MAIN 
@@ -144,9 +155,42 @@ change_button.grid(column = 1, row = 1, pady=10)
 
 # HOME 
 home_frame = tk.Frame(root)
-home_label = tk.Label(home_frame, text="")
-home_label.pack(pady=20)
+
+welcome_label = tk.Label(home_frame, text="")
+welcome_label.grid(row = 0, column = 0, columnspan=3, pady=20)
+
+day_label = tk.Label(home_frame, text="Day")
+day_label.grid(row = 1, column = 0, pady=5)
+
+temp_label = tk.Label(home_frame, text="Temp")
+temp_label.grid(row = 1, column = 2, pady=5)
+
+day_entry = tk.Entry(home_frame)
+day_entry.grid(row = 2, column = 0, pady=20)
+
+temp_entry = tk.Entry(home_frame)
+temp_entry.grid(row = 2, column = 2, pady=20)
+
+add_button = tk.Button(home_frame, text="Add", command=lambda: addData(temp_entry.get()))
+add_button.grid(row = 3, column = 0, pady=20)
+
+update_button = tk.Button(home_frame, text="Update", command=lambda: updateData(day_entry.get(), temp_entry.get()))
+update_button.grid(row = 3, column = 1, pady=20)
+
+delete_button = tk.Button(home_frame, text="Delete", command=lambda: deleteData(day_entry.get()))
+delete_button.grid(row = 3, column = 2, pady=20)
+
+predict_button = tk.Button(home_frame, text="Predict", width=20, command=predictBtn)
+predict_button.grid(row = 4, column = 0, columnspan=3, pady=5)
+
+plot_button = tk.Button(home_frame, text="Plot Graph", width=20, command=plotDataFromDataset)
+plot_button.grid(row = 5, column = 0, columnspan=3, pady=5)
+
+output_label = tk.Label(home_frame, text="Temperature For Tomorrow")
+output_label.grid(row = 6, column = 0, columnspan=3, pady=20)
 
 #----------------------------INITIALIZING--------------------->>>>>>>>>>>>>
+createTable()
+createDataset()
 login_frame.pack()
 root.mainloop()

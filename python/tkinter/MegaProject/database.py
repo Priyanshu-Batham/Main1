@@ -2,7 +2,7 @@ import sqlite3
 
 # --------------------------------------------------------------->>>>>>>>>>>
 def createTable():
-    conn = sqlite3.connect("userInfo.db")
+    conn = sqlite3.connect("database.db")
     cursor = conn.cursor()
 
     create_table_query = '''
@@ -20,7 +20,7 @@ def createTable():
 # --------------------------------------------------------------->>>>>>>>>>>
 
 def createAccount(username, password, mobile, email):
-    conn = sqlite3.connect("userInfo.db")
+    conn = sqlite3.connect("database.db")
     cursor = conn.cursor()
 
 
@@ -30,15 +30,15 @@ def createAccount(username, password, mobile, email):
     '''
     try:
         cursor.execute(insert_query, (username, password, mobile, email))
-    except:
-        print("Account Couldn't be Created")
+        conn.commit()
+    except sqlite3.Error as e:
+        print("Error:",e)
 
-    conn.commit()
     conn.close()
 # --------------------------------------------------------------->>>>>>>>>>>
 
 def showUserData():
-    conn = sqlite3.connect("userInfo.db")
+    conn = sqlite3.connect("database.db")
     cursor = conn.cursor()
 
     fetch_query = '''
@@ -56,7 +56,7 @@ def showUserData():
 # --------------------------------------------------------------->>>>>>>>>>>
 
 def isUserPresent(username, password):
-    conn = sqlite3.connect("userInfo.db")
+    conn = sqlite3.connect("database.db")
     cursor = conn.cursor()
 
     login_query = '''
@@ -73,7 +73,7 @@ def isUserPresent(username, password):
 # --------------------------------------------------------------->>>>>>>>>>>
 
 def isCredentialsCorrect(username, mobile, email):
-    conn = sqlite3.connect("userInfo.db")
+    conn = sqlite3.connect("database.db")
     cursor = conn.cursor()
 
     credential_query = '''
@@ -90,7 +90,7 @@ def isCredentialsCorrect(username, mobile, email):
 # --------------------------------------------------------------->>>>>>>>>>>
 
 def changePassword(username, password):
-    conn = sqlite3.connect("userInfo.db")
+    conn = sqlite3.connect("database.db")
     cursor = conn.cursor()
 
     change_query = '''
@@ -104,5 +104,107 @@ def changePassword(username, password):
         print("password changed successfully")
     except:
         print("Couldn't Change Password")
+    conn.commit()
+    conn.close()
+# --------------------------------------------------------------->>>>>>>>>>>
+
+def clearUserInfo():
+    conn = sqlite3.connect("database.db")
+    cursor = conn.cursor()
+
+    cursor.execute("DELETE FROM userInfo;")
+    
+    conn.commit()
+    conn.close()
+
+# -------------------------------------------------------------------------------------->>>>>>>>
+# -----------------------------------DATASET--QUERIES----------------------------------->>>>>>>>
+# -------------------------------------------------------------------------------------->>>>>>>>
+
+def createDataset():
+    conn = sqlite3.connect("database.db")
+    cursor = conn.cursor()
+
+    create_table_query = '''
+    CREATE TABLE IF NOT EXISTS dataset (
+        id INTEGER PRIMARY KEY,
+        temp INTEGER NOT NULL
+    );
+    '''
+    cursor.execute(create_table_query)
+    conn.commit()
+    conn.close()
+# --------------------------------------------------------------->>>>>>>>>>>
+
+def getData():
+    conn = sqlite3.connect("database.db")
+    cursor = conn.cursor()
+
+    query = '''
+    SELECT * FROM dataset;
+    '''
+    cursor.execute(query)
+    data = cursor.fetchall()
+
+    conn.close()
+    return data
+# --------------------------------------------------------------->>>>>>>>>>>
+
+
+def addData(temp):
+    conn = sqlite3.connect("database.db")
+    cursor = conn.cursor()
+
+    query = '''
+    INSERT INTO dataset (temp)
+    VALUES (?)
+    '''
+    cursor.execute(query,(temp,))
+
+    conn.commit()
+    conn.close()
+# --------------------------------------------------------------->>>>>>>>>>>
+
+def deleteData(day):
+    conn = sqlite3.connect("database.db")
+    cursor = conn.cursor()
+
+    query = '''
+    DELETE FROM dataset 
+    WHERE id = (?)
+    '''
+    try:
+        cursor.execute(query,(day,))
+    except:
+        print("Error occured")
+
+    conn.commit()
+    conn.close()
+# --------------------------------------------------------------->>>>>>>>>>>
+
+def updateData(day, temp):
+    conn = sqlite3.connect("database.db")
+    cursor = conn.cursor()
+
+    query = '''
+    UPDATE dataset 
+    SET temp = (?)
+    WHERE id = (?)
+    '''
+    try:
+        cursor.execute(query,(temp, day))
+    except:
+        print("Error occured")
+
+    conn.commit()
+    conn.close()
+# --------------------------------------------------------------->>>>>>>>>>>
+
+def clearDataset():
+    conn = sqlite3.connect("database.db")
+    cursor = conn.cursor()
+
+    cursor.execute("DELETE FROM dataset;")
+    
     conn.commit()
     conn.close()
