@@ -98,6 +98,11 @@ def changePassword(username, password):
     SET password = ? 
     WHERE username = ?
     '''
-    cursor.execute(change_query,(username, password))
+    try:
+        cursor.execute(change_query,(password, username))
+        print(cursor.rowcount)
+        print("password changed successfully")
+    except:
+        print("Couldn't Change Password")
     conn.commit()
     conn.close()
